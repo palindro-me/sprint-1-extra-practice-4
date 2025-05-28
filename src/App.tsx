@@ -64,6 +64,7 @@ switch (filter) {
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 changeTaskStatus={changeTaskStatus}
+                filter = {filter}
                 addTask={addTask} />
     </div>
   );

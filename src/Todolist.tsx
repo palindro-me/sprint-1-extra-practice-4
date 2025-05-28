@@ -13,19 +13,34 @@ type PropsType = {
     removeTask: (taskId: string) => void
     changeFilter: (value: FilterValuesType) => void
     addTask: (title: string) => void
+  filter: FilterValuesType
     changeTaskStatus: (taskId:string, isDone: boolean) => void
 }
 
 export const Todolist = (props: PropsType)=> {
     let [title, setTitle] = useState("")
+    const [error, setError] = useState<string | null>(null);
 
     const addTask = () => {
-        props.addTask(title);
+        if(title.trim()) {
+            props.addTask(title.trim())
+
         setTitle("");
+        } else {
+            setError('докинь title')
+        }
+
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
+        error && setError(null)
+        if(e.currentTarget.value.length < 10) {
+             setTitle(e.currentTarget.value)
+        }
+        else if (e.currentTarget.value.length === 10) {
+              setError('Максимальня строка')
+        }
+
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -44,8 +59,11 @@ export const Todolist = (props: PropsType)=> {
             <input value={title}
                    onChange={ onChangeHandler }
                    onKeyPress={ onKeyPressHandler }
+                   className={error ? 'error' : ''}
             />
             <button onClick={addTask}>+</button>
+            {error  && <div className={'errorMessage'}>{error}</div>}
+
         </div>
         <ul>
             {
@@ -62,7 +80,7 @@ export const Todolist = (props: PropsType)=> {
             }
         </ul>
         <div>
-            <button onClick={ onAllClickHandler }>All</button>
+            <button className={props.filter=== 'all' ? 'active-filter' : ''} onClick={ onAllClickHandler }>All</button>
             <button onClick={ onActiveClickHandler }>Active</button>
             <button onClick={ onCompletedClickHandler }>Completed</button>
         </div>

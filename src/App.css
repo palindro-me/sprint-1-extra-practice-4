@@ -24,3 +24,15 @@
   opacity: 0.5;
 }
 
+.errorMessage {
+  color: red;
+
+}
+
+.error {
+  border: red 1px solid
+}
+
+.activeFilter {
+  background-color: aquamarine;
+}
