@@ -48,6 +48,11 @@ switch (filter) {
   }
 
 
+  const changeTaskStatus = (taskId: string, isDone: boolean) => {
+    const newState = tasks.map(t => t.id === taskId ? {...t, isDone: isDone} : t)
+    setTasks(newState)
+  }
+
   function changeFilter(filter: FilterValuesType) {
     setFilter(filter);
   }
@@ -58,6 +63,7 @@ switch (filter) {
                 tasks={getFilteredTasks(tasks, filter)}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
+                changeTaskStatus={changeTaskStatus}
                 addTask={addTask} />
     </div>
   );
